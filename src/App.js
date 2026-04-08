@@ -13,7 +13,6 @@ import particles from "./utils.js/particles";
 
 function App() {
   const location = useLocation();
-  console.log(location);
 
   const handleInit = async (main) => {
     await loadFull(main);

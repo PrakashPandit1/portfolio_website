@@ -48,7 +48,9 @@
         &__img-wrapper {
           height: 100%;
 
-          a {
+          a,
+          &__inner {
+            display: block;
             height: 100%;
 
             img {
@@ -146,5 +148,4 @@
         width: 100%;
     }
 }
-
 

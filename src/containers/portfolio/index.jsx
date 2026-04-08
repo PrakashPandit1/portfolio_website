@@ -49,7 +49,7 @@ const filterData = [
   },
   {
     filterId: 2,
-    label: "Developement",
+    label: "Development",
   },
   {
     filterId: 3,
@@ -69,16 +69,10 @@ const Portfolio = () => {
     setHoveredValue(index);
   }
 
-  console.log("====================================");
-  console.log(hoveredValue);
-  console.log("====================================");
-
   const filteredItems =
     filteredvalue === 1
       ? portfolioData
       : portfolioData.filter((item) => item.id === filteredvalue);
-
-  console.log(filteredItems);
 
   return (
     <section id="portfolio" className="portfolio">
@@ -102,20 +96,42 @@ const Portfolio = () => {
           {filteredItems.map((item, index) => (
             <div
               className="portfolio__content__cards__item"
-              key={`cardItem${item.name.trim()}`}
+              key={`${item.name}-${index}`}
               onMouseEnter={() => handleHover(index)}
               onMouseLeave={() => handleHover(null)}
             >
               <div className="portfolio__content__cards__item__img-wrapper">
-                <a>
-                  <img alt="dummy data" src={item.image} />
-                </a>
+                {item.link ? (
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="portfolio__content__cards__item__img-wrapper__inner"
+                  >
+                    <img alt={item.name} src={item.image} />
+                  </a>
+                ) : (
+                  <div className="portfolio__content__cards__item__img-wrapper__inner">
+                    <img alt={item.name} src={item.image} />
+                  </div>
+                )}
               </div>
               <div className="overlay">
                 {index === hoveredValue && (
                   <div>
                     <p>{item.name}</p>
-                    <button>Visit</button>
+                    <button
+                      type="button"
+                      disabled={!item.link}
+                      onClick={() => {
+                        if (item.link) {
+                          const w = window.open(item.link, "_blank");
+                          if (w) w.opener = null;
+                        }
+                      }}
+                    >
+                      Visit
+                    </button>
                   </div>
                 )}
               </div>
