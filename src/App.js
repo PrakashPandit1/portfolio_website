@@ -11,6 +11,8 @@ import Resume from "./containers/resume";
 import Skills from "./containers/skills";
 import particles from "./utils.js/particles";
 
+
+
 function App() {
   const location = useLocation();
 

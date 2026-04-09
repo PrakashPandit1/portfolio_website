@@ -58,21 +58,16 @@ const filterData = [
 ];
 
 const Portfolio = () => {
-  const [filteredvalue, setFilteredValue] = useState(1);
-  const [hoveredValue, setHoveredValue] = useState(null);
+  const [selectedFilterId, setSelectedFilterId] = useState(1);
 
   function handleFilter(currentId) {
-    setFilteredValue(currentId);
-  }
-
-  function handleHover(index) {
-    setHoveredValue(index);
+    setSelectedFilterId(currentId);
   }
 
   const filteredItems =
-    filteredvalue === 1
+    selectedFilterId === 1
       ? portfolioData
-      : portfolioData.filter((item) => item.id === filteredvalue);
+      : portfolioData.filter((item) => item.id === selectedFilterId);
 
   return (
     <section id="portfolio" className="portfolio">
@@ -84,7 +79,7 @@ const Portfolio = () => {
         <ul className="portfolio__content__filter">
           {filterData.map((item) => (
             <li
-              className={item.filterId === filteredvalue ? "active" : ""}
+              className={item.filterId === selectedFilterId ? "active" : ""}
               onClick={() => handleFilter(item.filterId)}
               key={item.filterId}
             >
@@ -93,12 +88,10 @@ const Portfolio = () => {
           ))}
         </ul>
         <div className="portfolio__content__cards">
-          {filteredItems.map((item, index) => (
+          {filteredItems.map((item) => (
             <div
               className="portfolio__content__cards__item"
-              key={`${item.name}-${index}`}
-              onMouseEnter={() => handleHover(index)}
-              onMouseLeave={() => handleHover(null)}
+              key={item.name}
             >
               <div className="portfolio__content__cards__item__img-wrapper">
                 {item.link ? (
@@ -117,23 +110,21 @@ const Portfolio = () => {
                 )}
               </div>
               <div className="overlay">
-                {index === hoveredValue && (
-                  <div>
-                    <p>{item.name}</p>
-                    <button
-                      type="button"
-                      disabled={!item.link}
-                      onClick={() => {
-                        if (item.link) {
-                          const w = window.open(item.link, "_blank");
-                          if (w) w.opener = null;
-                        }
-                      }}
-                    >
-                      Visit
-                    </button>
-                  </div>
-                )}
+                <div>
+                  <p>{item.name}</p>
+                  <button
+                    type="button"
+                    disabled={!item.link}
+                    onClick={() => {
+                      if (item.link) {
+                        const w = window.open(item.link, "_blank");
+                        if (w) w.opener = null;
+                      }
+                    }}
+                  >
+                    Visit
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -143,3 +134,4 @@ const Portfolio = () => {
   );
 };
 export default Portfolio;
+
